@@ -1,0 +1,62 @@
+import { useContext } from "react";
+import { Button, Col, Image, Row } from "react-bootstrap";
+import { ProfileContext } from "../App";
+
+export default function ProfileHeader() {
+  const {
+    image,
+    name,
+    posts_no,
+    followers,
+    followoing,
+    subheader,
+    account_type: account_type,
+    description,
+    link,
+  } = useContext(ProfileContext);
+  return (
+    <Row className="p-5">
+      <Col md={3} className="d-flex align-items-center justify-content-center">
+        <Image src={image} style={{ height: "157px" }} roundedCircle />
+      </Col>
+      <Col md={9}>
+        <span className="me-4" style={{ fontSize: "20px" }}>
+          {name}
+        </span>
+        <button className="me-2">follow back</button>
+        <button variant="light me-2">message </button>
+        <button variant="light me-2">
+          <i className="bi bi-person-plus"></i>
+        </button>
+        <button variant="light">
+          <i className="bi bi-three-dots"></i>
+        </button>
+        <br />
+        <br />
+        <span className="me-4" style={{ fontSize: "20px" }}>
+          {name}
+        </span>
+        <button className="me-2">follow back</button>
+        <p className="me-4" style={{ fontSize: "20px" }}>
+          {name}
+        </p>
+        <button className="me-2">follow back</button>
+        <span className="me-4">
+          <strong>{posts_no}</strong> posts
+        </span>
+        <span className="me-4">
+          <strong>{followers}</strong> followers
+        </span>
+        <span className="me-4">
+          <strong>{followoing}</strong> following
+        </span>
+        <br />
+        <br />
+        <p style={{ margin: 0, fontWeight: "bold" }}>{subheader}</p>
+        <p style={{ margin: 0, color: "grey" }}>{account_type}</p>
+        <p style={{ margin: 0 }}>{description}</p>
+        <a href={link}>{link}</a>
+      </Col>
+    </Row>
+  );
+}

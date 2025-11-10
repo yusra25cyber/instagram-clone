@@ -6,9 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./store.js";
 createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider>
+  <StrictMode>
+    <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </StrictMode>
 );

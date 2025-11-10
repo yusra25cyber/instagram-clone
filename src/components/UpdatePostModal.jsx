@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { ProfileContext } from "../App.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
-import { updatePost } from "../feature/posts/postsSlice";
+import { updatePost } from "../features/posts/postsSlice";
 
 function UpdatePostModal({ show, handleClose, postId }) {
-  const { image, name } = useContext(profileContext);
+  const { image, name } = useContext(ProfileContext);
   const dispatch = useDispatch();
   const post = useSelector((state) =>
     state.posts.find((post) => post.id === postId)
@@ -44,12 +44,14 @@ function UpdatePostModal({ show, handleClose, postId }) {
   const handleImageError = () => {
     setInvalidUrl(true);
   };
-
+  const handleImageLoad = () => {
+    setInvalidUrl(false);
+  };
   return (
     <Modal show={show} onHide={handleClose} size="ig">
-      <ModalHeader>
+      <Modal.Header>
         <Modal.Title> Edit Post </Modal.Title>
-      </ModalHeader>
+      </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
           <Row>
@@ -58,6 +60,8 @@ function UpdatePostModal({ show, handleClose, postId }) {
                 src={image ? imageUrl : "http://sig1.co/img-placeholder-1"}
                 alt="uploaded content"
                 style={{ width: "100" }}
+                onError={handleImageError}
+                onLoad={handleImageLoad}
               />
             </Col>
 

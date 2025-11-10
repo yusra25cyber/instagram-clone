@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { ProfileContext } from "../App.jsx";
-
+import { useDispatch } from "react-redux";
+import { createPost } from "../features/posts/postsSlice";
 import { ModalHeader } from "react-bootstrap";
 
 export default function AddPosrModal({ show, handleClose }) {
   const { image, name } = useContext(ProfileContext);
-
+const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [invalidUrl, setInvalidUrl] = useState("");
@@ -14,6 +15,7 @@ export default function AddPosrModal({ show, handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (imageUrl) {
+      dispatch(createPost({ image: imageUrl, description }));
       setImageUrl("");
       setDescription("");
       handleClose();
@@ -25,7 +27,9 @@ export default function AddPosrModal({ show, handleClose }) {
   const handleImageError = () => {
     setInvalidUrl(true);
   };
-
+  const handleImageLoad = () => {
+    setInvalidUrl(false);
+  };
   return (
     <Modal show={show} onHide={handleClose} size="ig">
       <ModalHeader>
@@ -39,6 +43,8 @@ export default function AddPosrModal({ show, handleClose }) {
                 src={image ? imageUrl : "http://sig1.co/img-placeholder-1"}
                 alt="uploaded content"
                 style={{ width: "100" }}
+                onError={handleImageError}
+                onLoad={handleImageLoad}
               />
             </Col>
 
